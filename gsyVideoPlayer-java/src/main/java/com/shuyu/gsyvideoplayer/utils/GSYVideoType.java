@@ -1,6 +1,7 @@
 package com.shuyu.gsyvideoplayer.utils;
 
 /**
+ * video的一些默认配置
  * Created by shuyu on 2016/12/7.
  */
 
@@ -21,11 +22,20 @@ public class GSYVideoType {
     //全屏拉伸显示，使用这个属性时，surface_container建议使用FrameLayout
     public final static int SCREEN_MATCH_FULL = -4;
 
+    /**
+     * GLSurfaceView 主要用于OpenGL渲染的
+     */
+    public final static int GLSURFACE = 2;
 
-    public final static int IJKPLAYER = 0;
+    /**
+     * SurfaceView，与动画全屏的效果不是很兼容
+     */
+    public final static int SUFRACE = 1;
 
-    public final static int IJKEXOPLAYER = 1;
-
+    /**
+     * TextureView,默认
+     */
+    public final static int TEXTURE = 0;
 
 
     //显示比例类型
@@ -34,6 +44,11 @@ public class GSYVideoType {
     //硬解码标志
     private static boolean MEDIA_CODEC_FLAG = false;
 
+    //渲染类型
+    private static int sRenderType = TEXTURE;
+
+    //是否使用硬解码优化
+    private static boolean sTextureMediaPlay = false;
 
 
     /**
@@ -51,10 +66,31 @@ public class GSYVideoType {
     }
 
     /**
+     * 使能硬解码渲染优化
+     */
+    public static void enableMediaCodecTexture() {
+        sTextureMediaPlay = true;
+    }
+
+    /**
+     * 关闭硬解码渲染优化
+     */
+    public static void disableMediaCodecTexture() {
+        sTextureMediaPlay = false;
+    }
+
+    /**
      * 是否开启硬解码
      */
     public static boolean isMediaCodec() {
         return MEDIA_CODEC_FLAG;
+    }
+
+    /**
+     * 是否开启硬解码渲染优化
+     */
+    public static boolean isMediaCodecTexture() {
+        return sTextureMediaPlay;
     }
 
     public static int getShowType() {
@@ -67,4 +103,19 @@ public class GSYVideoType {
     public static void setShowType(int type) {
         TYPE = type;
     }
+
+
+    public static int getRenderType() {
+        return sRenderType;
+    }
+
+    /**
+     * 渲染控件
+     *
+     * @param renderType
+     */
+    public static void setRenderType(int renderType) {
+        sRenderType = renderType;
+    }
+
 }
